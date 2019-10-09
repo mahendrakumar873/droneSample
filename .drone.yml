@@ -5,9 +5,9 @@ pipeline:
     user: john.doe
     script:
       # Make temp directory for the project on target machine.
-      - mkdir -p /tmp/${DRONE_BUILD_NUMBER}
+      - mkdir -p /tmp
       # Clone repository to target machine.
-      - cd /tmp/${DRONE_BUILD_NUMBER} && git clone -b ${DRONE_BRANCH} https://github.com/mahendrakumar873/sampleiOS.git
+      - cd /tmp && git clone -b sample https://github.com/mahendrakumar873/sampleiOS.git
       # Run bash script that executes the iOS app test cases.
       #- cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/tests && bash build_and_run_tests.sh -b ${DRONE_BRANCH}
     when:
