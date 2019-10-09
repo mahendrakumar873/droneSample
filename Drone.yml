@@ -1,0 +1,24 @@
+pipeline:
+  build-ios-app:
+  ...
+  test-flight-release:
+    image: plugins/ssh
+    host: example.com
+    user: john.doe
+    script:
+      # Make temp workspace directory to target machine.
+      - mkdir -p /tmp/${DRONE_BUILD_NUMBER}
+      # Clone tagged release version from git.
+      - cd /tmp/${DRONE_BUILD_NUMBER} && git clone -b ${DRONE_TAG} --single-branch --depth 1 git@github.com:mahendrakumar873/sampleiOS.git
+      # Run build setup script.
+      - cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/deploy && bash build_setup.sh ${DRONE_TAG} ${DRONE_BUILD_NUMBER}
+      # Xarchive all iOS app versions.
+      - cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/deploy && bash build_xcarchive_all.sh configs/staging ${DRONE_TAG}
+      # Sign ipa's of all iOS app versions.
+      #- cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/deploy && bash build_sign_ipa_all.sh configs/staging ${DRONE_TAG}
+      # Finally deploy all versions to TestFlight.
+      #- cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/deploy && bash build_deploy_ipa_all.sh configs/staging john.doe@example.com keychain-item-name
+    #when:
+      #status: success
+      #event: tag
+~                      
