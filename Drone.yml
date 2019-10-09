@@ -1,7 +1,5 @@
 pipeline:
   build-ios-app:
-  ...
-  test-flight-release:
     image: plugins/ssh
     host: example.com
     user: john.doe
@@ -15,10 +13,10 @@ pipeline:
       # Xarchive all iOS app versions.
       - cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/deploy && bash build_xcarchive_all.sh configs/staging ${DRONE_TAG}
       # Sign ipa's of all iOS app versions.
-      #- cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/deploy && bash build_sign_ipa_all.sh configs/staging ${DRONE_TAG}
+      - cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/deploy && bash build_sign_ipa_all.sh configs/staging ${DRONE_TAG}
       # Finally deploy all versions to TestFlight.
       #- cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/deploy && bash build_deploy_ipa_all.sh configs/staging john.doe@example.com keychain-item-name
-    #when:
-      #status: success
+    when:
+      status: success
       #event: tag
 ~                      
