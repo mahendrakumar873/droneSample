@@ -1,8 +1,8 @@
 pipeline:
   build-ios-app:
-    #image: plugins/ssh
-    #host: example.com
-    #user: john.doe
+    image: plugins/ssh
+    host: 172.32.16.100
+    user: paxcel
     script:
       # Make temp directory for the project on target machine.
       - mkdir -p /tmp
