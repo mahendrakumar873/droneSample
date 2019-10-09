@@ -9,6 +9,6 @@ pipeline:
       # Clone repository to target machine.
       - cd /tmp/${DRONE_BUILD_NUMBER} && git clone -b ${DRONE_BRANCH} git@github.com:dummy-org/dummy-ios-app.git
       # Run bash script that executes the iOS app test cases.
-     # - cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/tests && bash build_and_run_tests.sh -b ${DRONE_BRANCH}
+      - cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/tests && bash build_and_run_tests.sh -b ${DRONE_BRANCH}
     when:
       event: push
