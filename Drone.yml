@@ -1,0 +1,15 @@
+pipeline:
+  build-ios-app:
+    image: plugins/ssh
+    host: example.com
+    user: john.doe
+    script:
+      # Make temp directory for the project on target machine.
+      - mkdir -p /tmp/
+      # Clone repository to target machine.
+      - cd /tmp/ && git clone -b ${DRONE_BRANCH} git@github.com:mahendrakumar873/sampleiOS.git
+      # Run bash script that executes the iOS app test cases.
+     # - cd /tmp/${DRONE_BUILD_NUMBER}/dummy-ios-app/tests && bash build_and_run_tests.sh -b ${DRONE_BRANCH}
+    when:
+      event: push
+
